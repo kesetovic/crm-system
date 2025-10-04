@@ -1,4 +1,3 @@
-using System;
 using api.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
