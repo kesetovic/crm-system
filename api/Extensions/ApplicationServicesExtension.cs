@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 using api.Data;
+using api.Helpers;
+using api.Interfaces;
 using api.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +34,12 @@ public static class ApplicationServicesExtension
             )
         );
 
-        services.AddScoped<IJwtTokenService, TokenService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<ICalleeRepository, CalleeRepository>();
+        services.AddScoped<IAppUserRepository, AppUserRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
         return services;
     }

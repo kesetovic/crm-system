@@ -1,27 +1,14 @@
-
-using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using api.Helpers;
+using api.Interfaces;
 using api.Model;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace api.Services;
 
-public class JwtOptions
-{
-    public string Key { get; set; } = String.Empty;
-    public string Issuer { get; set; } = String.Empty;
-    public string Audience { get; set; } = String.Empty;
-    public double DurationInMinutes { get; set; } = 60;
-}
-
-public interface IJwtTokenService
-{
-    Task<(string token, DateTime expiration)> CreateTokenAsync(AppUser user, IList<string> roles);
-}
-
-public class TokenService : IJwtTokenService
+public class TokenService : ITokenService
 {
     private readonly JwtOptions _jwtOptions;
 
