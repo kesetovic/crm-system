@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { ParticlesComponent } from './particles-component/particles-component';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [ParticlesComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
