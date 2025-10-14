@@ -1,0 +1,15 @@
+<mat-card appearance="outlined" style="width: fit-content; margin: 0.5rem;">
+    <mat-card-header>
+        <mat-card-title>{{ contact?.firstName }} {{ contact?.lastName }}</mat-card-title>
+        <mat-card-subtitle>{{ contact?.email }}</mat-card-subtitle>
+    </mat-card-header>
+    <div style="margin: 1rem 0rem 0rem 1rem; line-height: 0;">
+        <p><fa-icon [icon]="faPhone"></fa-icon>{{ contact?.phoneNumber }}</p>
+        <p><fa-icon [icon]="faHome"></fa-icon>{{ contact?.address }}</p>
+    </div>
+    <mat-card-actions align="start">
+        <button matButton="tonal" style="margin-right: 0.5rem;">Call contact</button>
+        <button matButton (click)="removeContact(contact!.calleeId)"><fa-icon [icon]="faTrashCan"></fa-icon> Remove
+            contact</button>
+    </mat-card-actions>
+</mat-card>

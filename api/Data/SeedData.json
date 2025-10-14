@@ -1,0 +1,82 @@
+[
+  {
+    "UserName": "john.doe",
+    "Email": "john.doe@example.com",
+    "FirstName": "John",
+    "LastName": "Doe",
+    "DateOfBirth": "1990-05-14T00:00:00",
+    "Gender": "Male"
+  },
+  {
+    "UserName": "jane.smith",
+    "Email": "jane.smith@example.com",
+    "FirstName": "Jane",
+    "LastName": "Smith",
+    "DateOfBirth": "1993-09-21T00:00:00",
+    "Gender": "Female"
+  },
+  {
+    "UserName": "mike.brown",
+    "Email": "mike.brown@example.com",
+    "FirstName": "Mike",
+    "LastName": "Brown",
+    "DateOfBirth": "1988-12-03T00:00:00",
+    "Gender": "Male"
+  },
+  {
+    "UserName": "susan.green",
+    "Email": "susan.green@example.com",
+    "FirstName": "Susan",
+    "LastName": "Green",
+    "DateOfBirth": "1995-07-18T00:00:00",
+    "Gender": "Female"
+  },
+  {
+    "UserName": "alex.jones",
+    "Email": "alex.jones@example.com",
+    "FirstName": "Alex",
+    "LastName": "Jones",
+    "DateOfBirth": "1992-02-10T00:00:00",
+    "Gender": "Male"
+  },
+  {
+    "UserName": "emily.white",
+    "Email": "emily.white@example.com",
+    "FirstName": "Emily",
+    "LastName": "White",
+    "DateOfBirth": "1996-11-25T00:00:00",
+    "Gender": "Female"
+  },
+  {
+    "UserName": "chris.taylor",
+    "Email": "chris.taylor@example.com",
+    "FirstName": "Chris",
+    "LastName": "Taylor",
+    "DateOfBirth": "1987-04-30T00:00:00",
+    "Gender": "Male"
+  },
+  {
+    "UserName": "olivia.martin",
+    "Email": "olivia.martin@example.com",
+    "FirstName": "Olivia",
+    "LastName": "Martin",
+    "DateOfBirth": "1994-01-09T00:00:00",
+    "Gender": "Female"
+  },
+  {
+    "UserName": "david.wilson",
+    "Email": "david.wilson@example.com",
+    "FirstName": "David",
+    "LastName": "Wilson",
+    "DateOfBirth": "1991-08-16T00:00:00",
+    "Gender": "Male"
+  },
+  {
+    "UserName": "sophia.thomas",
+    "Email": "sophia.thomas@example.com",
+    "FirstName": "Sophia",
+    "LastName": "Thomas",
+    "DateOfBirth": "1997-03-05T00:00:00",
+    "Gender": "Female"
+  }
+]

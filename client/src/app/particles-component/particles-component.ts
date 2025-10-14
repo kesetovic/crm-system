@@ -35,21 +35,21 @@ export class ParticlesComponent {
       },
       modes: {
         push: {
-          quantity: 4,
+          quantity: 3,
         },
         repulse: {
-          distance: 200,
-          duration: 0.4,
+          distance: 150,
+          duration: 2,
         },
       },
     },
     particles: {
       color: {
-        value: "#bb0000ff",
+        value: "#0096bbff",
       },
       links: {
-        color: "#ff0000ff",
-        distance: 150,
+        color: "#002fffff",
+        distance: 250,
         enable: true,
         opacity: 0.5,
         width: 1,
@@ -69,7 +69,7 @@ export class ParticlesComponent {
           enable: true,
           area: 800,
         },
-        value: 50,
+        value: 150,
       },
       opacity: {
         value: 0.5,
@@ -78,7 +78,7 @@ export class ParticlesComponent {
         type: "circle",
       },
       size: {
-        value: { min: 1, max: 3 },
+        value: { min: 2, max: 5 },
       },
     },
     detectRetina: true,

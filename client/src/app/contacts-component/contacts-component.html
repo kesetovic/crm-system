@@ -1,0 +1,20 @@
+@if(contacts.length === 0) {
+<h6 style="margin: 1rem;">You have no contacts! Add contacts to continue. </h6>
+<button matButton color="primary" style="margin: 0.5rem" (click)="openAddContactDialog()">Add Contact</button>
+} @else{
+<div class="d-flex" style="justify-content: space-between; margin: 1rem;">
+    <h3 style="margin: 1rem;">Your contacts</h3>
+    <mat-form-field appearance="outline">
+        <mat-label>Search contacts</mat-label>
+        <input matInput (input)="onFilterChange($event)" placeholder="Enter name" />
+    </mat-form-field>
+    <button matButton color="primary" style="margin: 0.5rem" (click)="openAddContactDialog()">Add Contact</button>
+</div>
+
+}
+<div class="d-flex">
+    @for(contact of contactsCache; track $index) {
+    <app-contact-card-component [contact]="contact"
+        (contactDeleted)="onContactDeleted($event)"></app-contact-card-component>
+    }
+</div>
