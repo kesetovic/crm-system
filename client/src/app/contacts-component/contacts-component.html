@@ -1,4 +1,4 @@
-@if(contacts.length === 0) {
+@if(contacts().length === 0) {
 <h6 style="margin: 1rem;">You have no contacts! Add contacts to continue. </h6>
 <button matButton color="primary" style="margin: 0.5rem" (click)="openAddContactDialog()">Add Contact</button>
 } @else{
@@ -13,7 +13,7 @@
 
 }
 <div class="d-flex">
-    @for(contact of contactsCache; track $index) {
+    @for(contact of contactsCache(); track $index) {
     <app-contact-card-component [contact]="contact"
         (contactDeleted)="onContactDeleted($event)"></app-contact-card-component>
     }

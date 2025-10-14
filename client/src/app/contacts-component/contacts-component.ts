@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ContactCardComponent } from "../contact-card-component/contact-card-component";
 import { Callee } from '../../_models/callee';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,16 +21,16 @@ export class ContactsComponent implements OnInit {
   private toastrService = inject(ToastrService);
   private dialog: MatDialog = inject(MatDialog);
 
-  contacts: CalleeDto[] = [];
-  contactsCache: CalleeDto[] = [];
-  filterText: string = '';
+  contacts = signal<CalleeDto[]>([]);
+  contactsCache = signal<CalleeDto[]>([]);
+  filterText = signal<string>('');
 
   ngOnInit(): void {
     this.contactsService.getContactsForUser().subscribe({
       next: _contacts => {
-        this.contacts = _contacts as CalleeDto[];
+        this.contacts.set(_contacts);
         this.toastrService.success('Contacts loaded successfully');
-        this.contactsCache = [...this.contacts];
+        this.contactsCache.set(_contacts);
       },
       error: error => {
         this.toastrService.error('Failed to load contacts: ' + error.message);
@@ -49,7 +49,7 @@ export class ContactsComponent implements OnInit {
       if (result) {
         this.contactsService.addContactForUser(result).subscribe({
           next: (newContact) => {
-            this.contacts.push(newContact);
+            this.contacts.update(contacts => [...contacts, newContact]);
             this.filterContacts();
             this.toastrService.success('Contact added successfully');
           },
@@ -62,20 +62,20 @@ export class ContactsComponent implements OnInit {
   }
 
   onContactDeleted(deletedContactId: string): void {
-    this.contacts = this.contacts.filter(c => c.calleeId !== deletedContactId);
+    this.contacts.update(contacts => contacts.filter(c => c.calleeId !== deletedContactId));
     this.filterContacts();
   }
 
   onFilterChange(event: Event): void {
     const input = (event.target as HTMLInputElement).value.toLowerCase();
-    this.filterText = input;
+    this.filterText.set(input);
     this.filterContacts();
   }
 
   private filterContacts(): void {
-    const filter = this.filterText.toLowerCase();
-    this.contactsCache = this.contacts.filter(contact =>
+    const filter = this.filterText().toLowerCase();
+    this.contactsCache.set(this.contacts().filter(contact =>
       contact.firstName.toLowerCase().concat(" ").concat(contact.lastName.toLowerCase()).includes(filter)
-    );
+    ))
   }
 }
