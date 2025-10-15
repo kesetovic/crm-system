@@ -5,9 +5,10 @@ import { Auth } from '../_services/auth';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { AddOrderComponent } from "../add-order-component/add-order-component";
+import { MyOrdersComponent } from "../my-orders-component/my-orders-component";
 @Component({
   selector: 'app-home-component',
-  imports: [MatTabsModule, ContactsComponent, MatButtonModule, AddOrderComponent],
+  imports: [MatTabsModule, ContactsComponent, MatButtonModule, AddOrderComponent, MyOrdersComponent],
   templateUrl: './home-component.html',
   styleUrl: './home-component.css'
 })

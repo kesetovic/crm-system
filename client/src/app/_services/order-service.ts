@@ -13,4 +13,8 @@ export class OrderService {
   addOrder(model: any) {
     return this.http.post<OrderDto>(this.baseUrl + 'order/add', model, {});
   }
+
+  getOrdersForUser(params: any) {
+    return this.http.get<OrderDto[]>(this.baseUrl + 'order/fetch', { observe: 'response', params });
+  }
 }

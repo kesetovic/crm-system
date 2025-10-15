@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using api.Helpers;
 namespace api.Model;
 
@@ -12,6 +13,7 @@ public class Order
     public required double OrderPrice { get; set; }
     public required DateTime OrderDate { get; set; }
     public string OrderNotes { get; set; } = string.Empty;
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public required OrderStatus OrderStatus { get; set; } = OrderStatus.NEW;
     public double BonusAwarded { get; set; } = 0;
 
