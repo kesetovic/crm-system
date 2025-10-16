@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../env/environment.development';
-import { CalleeDto } from '../../_models/calleDto';
+import { CalleeDto } from '../_models/calleDto';
 
 @Injectable({
   providedIn: 'root'

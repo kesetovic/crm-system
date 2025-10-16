@@ -1,34 +1,53 @@
-<mat-card-title class="m-3">My Orders</mat-card-title>
-
-<div class="filters d-flex gap-3 m-3" style="flex-wrap: wrap;">
-    <mat-form-field appearance="outline">
-        <mat-label>Customer Name</mat-label>
-        <input matInput [(ngModel)]="orderParams().customerNameString" (input)="getOrders()" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-        <mat-label>Min Price</mat-label>
-        <input matInput type="number" [(ngModel)]="orderParams().minValue" (input)="getOrders()" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-        <mat-label>Max Price</mat-label>
-        <input matInput type="number" [(ngModel)]="orderParams().maxValue" (input)="getOrders()" />
-    </mat-form-field>
-    <div class="sort-buttons">
-        <button mat-button (click)="setOrderBy('lowest')">Lowest price</button>
-        <button mat-button (click)="setOrderBy('highest')">Highest price</button>
-        <button mat-button (click)="setOrderBy('oldest')">Oldest</button>
-        <button mat-button (click)="setOrderBy('latest')">Latest</button>
+<mat-card [appearance]="'raised'">
+    <div matRipple [matRippleColor]="'rgba(0,0,212,0.01)'" class="p-3" *ngIf="summary">
+        <div class="stats">
+            <p><strong>Total orders:</strong> {{ summary.totalSales }}</p>
+            <p><strong>Total bonus:</strong> {{ summary.totalBonus }}</p>
+            <p><strong>Total revenue:</strong> {{ summary.totalRevenue | currency:'BAM':'symbol' }}</p>
+        </div>
+        <div class="d-flex" style="flex-wrap: wrap;">
+            <div class="chart" style="width: 100%; max-width: 800px;">
+                <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" chartType="line">
+                </canvas>
+            </div>
+            <div class="chart" style="width: 100%; max-width: 800px;">
+                <canvas baseChart [data]="lineChart2Data" [options]="lineChartOptions" chartType="line">
+                </canvas>
+            </div>
+        </div>
     </div>
-    <button mat-button color="warn" (click)="resetFilters()">Reset filters</button>
-</div>
-<div class="d-flex gap-3 m-3" style="flex-wrap: wrap;">
-    @for (item of paginatedResult()?.items; track $index) {
-    <app-order-card-component [order]="item"></app-order-card-component>
-    }
-</div>
+    <mat-card-title class="m-3 fw-bold">My Orders</mat-card-title>
 
-<mat-paginator [length]="paginatedResult()?.pagination?.totalItems || 0" [pageSize]="orderParams().pageSize"
-    [pageIndex]="orderParams().pageNumber - 1" (page)="pageChanged($event)">
-</mat-paginator>
+    <div class="filters d-flex gap-3 m-3 p-3" style="flex-wrap: wrap;">
+        <mat-form-field appearance="outline">
+            <mat-label>Customer Name</mat-label>
+            <input matInput [(ngModel)]="orderParams().customerNameString" (input)="getOrders()" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Min Price</mat-label>
+            <input matInput type="number" [(ngModel)]="orderParams().minValue" (input)="getOrders()" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Max Price</mat-label>
+            <input matInput type="number" [(ngModel)]="orderParams().maxValue" (input)="getOrders()" />
+        </mat-form-field>
+        <div class="sort-buttons">
+            <button mat-button (click)="setOrderBy('lowest')">Lowest price</button>
+            <button mat-button (click)="setOrderBy('highest')">Highest price</button>
+            <button mat-button (click)="setOrderBy('oldest')">Oldest</button>
+            <button mat-button (click)="setOrderBy('latest')">Latest</button>
+        </div>
+        <button matButton="filled" (click)="resetFilters()">Reset filters</button>
+    </div>
+    <div class="d-flex gap-3 m-3" style="flex-wrap: wrap;">
+        @for (item of paginatedResult()?.items; track $index) {
+        <app-order-card-component [order]="item"></app-order-card-component>
+        }
+    </div>
+
+    <mat-paginator [length]="paginatedResult()?.pagination?.totalItems || 0" [pageSize]="orderParams().pageSize"
+        [pageIndex]="orderParams().pageNumber - 1" (page)="pageChanged($event)">
+    </mat-paginator>
+</mat-card>

@@ -16,8 +16,8 @@
     }
     <mat-card-header>
         <mat-card-title>{{ order.customerName }} {{ order.customerLastName }}</mat-card-title>
-        <mat-card-subtitle style="color: crimson;">{{order.orderId}}</mat-card-subtitle>
-        <mat-card-subtitle>{{ order.orderDate | date:'medium'}}</mat-card-subtitle>
+        <mat-card-subtitle style="color: rgb(0, 174, 255);">{{order.orderId}}</mat-card-subtitle>
+        <mat-card-subtitle>{{ order.orderDate | date: 'medium'}}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="mt-3">

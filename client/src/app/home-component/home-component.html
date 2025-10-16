@@ -1,5 +1,8 @@
 <div class="d-flex" style="justify-content: space-between; margin: 1rem; align-items: center;">
-    <p><span style="font-weight: bold;">{{this.authService.currentUser()?.username}}</span> is
+    <p>@if(this.authService.currentUser()?.roles?.includes('Admin')){<fa-icon style="margin-right: 0.5rem;"
+            [icon]="faUserPlus"></fa-icon>}
+        @else { <fa-icon style="margin-right: 0.5rem;" [icon]="faUser"></fa-icon> }<span
+            style="font-weight: bold;">{{this.authService.currentUser()?.username}}</span> is
         currently connected to the
         system</p>
     <button matButton (click)="logout()">Logout</button>

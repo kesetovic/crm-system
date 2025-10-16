@@ -1,13 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Callee } from '../../_models/callee';
 import { MatDialogRef, MatDialogContent, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { NgIf } from '@angular/common';
-import { CalleeDto } from '../../_models/calleDto';
-import { AddCalleeDto } from '../../_models/addCalleeDto';
+import { AddCalleeDto } from '../_models/addCalleeDto';
 
 
 @Component({

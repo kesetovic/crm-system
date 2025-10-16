@@ -1,10 +1,10 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Callee } from '../../_models/callee';
+import { Callee } from '../_models/callee';
 import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUser, faPhone, faHome, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { CalleeDto } from '../../_models/calleDto';
+import { CalleeDto } from '../_models/calleDto';
 import { ContactsService } from '../_services/contacts-service';
 import { ToastrService } from 'ngx-toastr';
 @Component({

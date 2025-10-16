@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { environment } from '../../env/environment.development';
-import { AuthResponse } from '../../_models/authReponse';
+import { AuthResponse } from '../_models/authReponse';
 
 @Injectable({
   providedIn: 'root'

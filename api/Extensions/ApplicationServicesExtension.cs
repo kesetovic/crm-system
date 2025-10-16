@@ -35,6 +35,7 @@ public static class ApplicationServicesExtension
         );
 
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IStatsService, StatsService>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<ICalleeRepository, CalleeRepository>();
         services.AddScoped<IAppUserRepository, AppUserRepository>();

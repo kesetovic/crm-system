@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AddOrderDto } from '../../_models/addOrderDto';
+import { AddOrderDto } from '../_models/addOrderDto';
 import { OrderService } from '../_services/order-service';
 import { ToastrService } from 'ngx-toastr';
 import { MatCard, MatCardModule } from "@angular/material/card";

@@ -1,13 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ContactCardComponent } from "../contact-card-component/contact-card-component";
-import { Callee } from '../../_models/callee';
+import { Callee } from '../_models/callee';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AddContactDialogComponent } from '../add-contact-dialog-component/add-contact-dialog-component';
-import { CalleeDto } from '../../_models/calleDto';
+import { CalleeDto } from '../_models/calleDto';
 import { ContactsService } from '../_services/contacts-service';
 import { ToastrService } from 'ngx-toastr';
-import { AddCalleeDto } from '../../_models/addCalleeDto';
+import { AddCalleeDto } from '../_models/addCalleeDto';
 import { MatInputModule } from "@angular/material/input";
 
 @Component({
@@ -29,7 +29,7 @@ export class ContactsComponent implements OnInit {
     this.contactsService.getContactsForUser().subscribe({
       next: _contacts => {
         this.contacts.set(_contacts);
-        this.toastrService.success('Contacts loaded successfully');
+        this.toastrService.info('Contacts loaded successfully');
         this.contactsCache.set(_contacts);
       },
       error: error => {
