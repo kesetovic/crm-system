@@ -13,6 +13,5 @@ import { MatRippleModule } from '@angular/material/core';
   styleUrl: './order-card-component.css'
 })
 export class OrderCardComponent {
-
   @Input() order!: OrderDto;
 }

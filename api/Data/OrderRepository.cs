@@ -75,4 +75,39 @@ public class OrderRepository(DataContext context, IMapper mapper) : IOrderReposi
 
         return await PagedList<OrderDto>.CreateAsync(query.ProjectTo<OrderDto>(mapper.ConfigurationProvider), orderParams.PageNumber, orderParams.PageSize);
     }
+
+    public void UpdateOrder(Order order)
+    {
+        context.Entry(order).State = EntityState.Modified;
+    }
+
+    public async Task<Order?> GetOrderByIdAsync(string id)
+    {
+        return await context.Orders.FindAsync(id);
+    }
+
+    public async Task<PagedList<OrderDto>> GetOrdersToPackAsync(OrderParams orderParams)
+    {
+        var query = context.Orders.AsQueryable();
+
+        query = query.Where(o => o.OrderStatus == OrderStatus.NEW);
+
+        if (orderParams.CustomerNameString != String.Empty && orderParams.CustomerNameString != null)
+        {
+            query = query.Where(x =>
+                (x.OrderId).ToLower().Contains(orderParams.CustomerNameString.ToLower()));
+        }
+
+        query = query.Where(x => x.OrderPrice >= orderParams.minValue && x.OrderPrice <= orderParams.maxValue);
+
+        query = orderParams.OrderBy switch
+        {
+            "oldest" => query.OrderBy(x => x.OrderDate),
+            "lowest" => query.OrderBy(x => x.OrderPrice),
+            "highest" => query.OrderByDescending(x => x.OrderPrice),
+            _ => query.OrderByDescending(x => x.OrderDate)
+        };
+
+        return await PagedList<OrderDto>.CreateAsync(query.ProjectTo<OrderDto>(mapper.ConfigurationProvider), orderParams.PageNumber, orderParams.PageSize);
+    }
 }

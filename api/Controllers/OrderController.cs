@@ -62,6 +62,75 @@ public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseContr
 
         return BadRequest("Failed to create order");
     }
+    [HttpPut("{orderId}/pack")]
+    [Authorize(Roles = "Packer, Admin")]
+    public async Task<ActionResult> PackOrder(string orderId)
+    {
+        var order = await unitOfWork.Orders.GetOrderByIdAsync(orderId);
+        if (order == null) return NotFound("Order doesn't exist");
+        if (order.OrderStatus != OrderStatus.NEW) return BadRequest("Order cannot be packed");
+
+        order.OrderStatus = OrderStatus.PACKED;
+        unitOfWork.Orders.UpdateOrder(order);
+
+        if (await unitOfWork.CompleteAsync())
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+
+    [HttpPut("{orderId}/complete")]
+    [Authorize(Roles = "Packer, Admin")]
+    public async Task<ActionResult> CompleteOrder(string orderId)
+    {
+        var order = await unitOfWork.Orders.GetOrderByIdAsync(orderId);
+        if (order == null) return NotFound("Order doesn't exist");
+        if (order.OrderStatus != OrderStatus.PACKED) return BadRequest("Order cannot be completed");
+
+        order.OrderStatus = OrderStatus.COMPLETED;
+        unitOfWork.Orders.UpdateOrder(order);
+
+        if (await unitOfWork.CompleteAsync())
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+
+    [HttpPut("{orderId}/cancel")]
+    [Authorize(Roles = "Packer, Admin")]
+    public async Task<ActionResult> CancelOrder(string orderId)
+    {
+        var order = await unitOfWork.Orders.GetOrderByIdAsync(orderId);
+
+        if (order == null) return NotFound("Order doesn't exist");
+        if (order.OrderStatus != OrderStatus.NEW &&
+         order.OrderStatus != OrderStatus.PACKED)
+        {
+            return BadRequest("Order cannot be cancelled");
+        }
+
+        order.OrderStatus = OrderStatus.PACKED;
+        unitOfWork.Orders.UpdateOrder(order);
+
+        if (await unitOfWork.CompleteAsync())
+        {
+            return Ok();
+        }
+
+        return BadRequest();
+    }
+    [Authorize(Roles = "Packer,Admin")]
+    [HttpGet("fetch/topack")]
+    public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersToPack([FromQuery] OrderParams orderParams)
+    {
+        var orders = await unitOfWork.Orders.GetOrdersToPackAsync(orderParams);
+        Response.AddPaginationHeader(orders);
+        return Ok(orders);
+    }
 }
 
 

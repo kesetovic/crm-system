@@ -8,9 +8,10 @@ import { AddOrderComponent } from "../add-order-component/add-order-component";
 import { MyOrdersComponent } from "../my-orders-component/my-orders-component";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserPlus, faUser } from '@fortawesome/free-solid-svg-icons';
+import { OrdersPackComponent } from "../orders-pack-component/orders-pack-component";
 @Component({
   selector: 'app-home-component',
-  imports: [MatTabsModule, ContactsComponent, MatButtonModule, AddOrderComponent, MyOrdersComponent, FontAwesomeModule],
+  imports: [MatTabsModule, ContactsComponent, MatButtonModule, AddOrderComponent, MyOrdersComponent, FontAwesomeModule, OrdersPackComponent],
   templateUrl: './home-component.html',
   styleUrl: './home-component.css'
 })

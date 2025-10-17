@@ -10,7 +10,10 @@ public interface IOrderRepository
     void AddOrder(Order order);
     void DeleteOrder(Order order);
     Task<IEnumerable<OrderDto>> GetOrdersForUserAsync(string username);
+    Task<Order?> GetOrderByIdAsync(string id);
     Task<PagedList<OrderDto>> GetOrdersForUserAsync(string username, OrderParams orderParams);
     Task<PagedList<OrderDto>> GetOrdersAsync(OrderParams orderParams);
-    
+    void UpdateOrder(Order order);
+    Task<PagedList<OrderDto>> GetOrdersToPackAsync(OrderParams orderParams);
+
 }

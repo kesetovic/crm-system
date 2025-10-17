@@ -1,0 +1,36 @@
+<mat-card [appearance]="'raised'">
+    <mat-card-title class="m-3 fw-bold">Orders to pack</mat-card-title>
+
+    <div class="filters d-flex gap-3 m-3 p-3" style="flex-wrap: wrap;">
+        <mat-form-field appearance="outline">
+            <mat-label>Order ID</mat-label>
+            <input matInput [(ngModel)]="orderParams().customerNameString" (input)="getOrders()" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Min Price</mat-label>
+            <input matInput type="number" [(ngModel)]="orderParams().minValue" (input)="getOrders()" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Max Price</mat-label>
+            <input matInput type="number" [(ngModel)]="orderParams().maxValue" (input)="getOrders()" />
+        </mat-form-field>
+        <div class="sort-buttons">
+            <button mat-button (click)="setOrderBy('lowest')">Lowest price</button>
+            <button mat-button (click)="setOrderBy('highest')">Highest price</button>
+            <button mat-button (click)="setOrderBy('oldest')">Oldest</button>
+            <button mat-button (click)="setOrderBy('latest')">Latest</button>
+        </div>
+        <button matButton="filled" (click)="resetFilters()">Reset filters</button>
+    </div>
+    <div class="d-flex gap-3 m-3" style="flex-wrap: wrap;">
+        @for (item of paginatedResult()?.items; track $index) {
+        <app-order-pack-card-component [order]="item" (emitEvent)="getOrders()"></app-order-pack-card-component>
+        }
+    </div>
+
+    <mat-paginator [length]="paginatedResult()?.pagination?.totalItems || 0" [pageSize]="orderParams().pageSize"
+        [pageIndex]="orderParams().pageNumber - 1" (page)="pageChanged($event)">
+    </mat-paginator>
+</mat-card>
