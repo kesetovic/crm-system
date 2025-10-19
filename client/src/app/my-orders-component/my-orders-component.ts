@@ -68,7 +68,6 @@ export class MyOrdersComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.signalRService.startConnection();
     this.signalRService.orderSignal$.subscribe(() => {
       this.getOrders();
       this.getSummary();

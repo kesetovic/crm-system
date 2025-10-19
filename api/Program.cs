@@ -19,7 +19,7 @@ using (var scope = app.Services.CreateScope())
     await Seed.SeedUsers(userManager, roleManager);
 }
 
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200").AllowCredentials());
 
 app.UseHttpsRedirection();
 

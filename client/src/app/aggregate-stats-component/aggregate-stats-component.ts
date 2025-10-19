@@ -28,7 +28,6 @@ export class AggregateStatsComponent implements OnInit {
   perUserMonthlyRevenueChart!: ChartConfiguration<'line'>['data'];
 
   ngOnInit(): void {
-    this.signalRService.startConnection();
     this.signalRService.orderSignal$.subscribe(() => {
       console.log('Order signal received, refetching..');
       this.reloadStats();

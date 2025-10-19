@@ -33,7 +33,6 @@ export class AllOrdersComponent {
   count: number = 0;
 
   ngOnInit() {
-    this.signalRService.startConnection();
     this.signalRService.orderSignal$.subscribe(() => {
       this.getOrders();
     })

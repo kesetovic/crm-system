@@ -32,6 +32,7 @@ public static class ApplicationServicesExtension
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .WithOrigins("http://localhost:4200", "https://localhost:4200")
+                .AllowCredentials()
             )
         );
 

@@ -3,6 +3,7 @@ import { NgxSpinnerComponent } from "ngx-spinner";
 import { RouterOutlet } from '@angular/router';
 import { Auth } from './_services/auth';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { SignalRService } from './_services/signal-r-service';
 @Component({
   selector: 'app-root',
   imports: [NgxSpinnerComponent, RouterOutlet],
@@ -11,8 +12,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 })
 export class App implements OnInit {
   authService = inject(Auth);
+  private signalRService = inject(SignalRService);
 
   ngOnInit(): void {
+    this.signalRService.startConnection();
     this.setCurrentUser();
   }
 

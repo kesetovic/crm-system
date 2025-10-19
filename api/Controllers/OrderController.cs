@@ -1,6 +1,7 @@
 using api.DTOs;
 using api.Extensions;
 using api.Helpers;
+using api.Hubs;
 using api.Interfaces;
 using api.Model;
 using AutoMapper;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace api.Controllers;
 
-public class OrderController(IUnitOfWork unitOfWork, IMapper mapper, IHubContext hubContext) : BaseController
+public class OrderController(IUnitOfWork unitOfWork, IMapper mapper, IHubContext<OrderHub> hubContext) : BaseController
 {
     [HttpGet("fetch")]
     [Authorize]

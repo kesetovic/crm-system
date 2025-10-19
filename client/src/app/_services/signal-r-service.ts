@@ -11,9 +11,14 @@ export class SignalRService {
   private toastr = inject(ToastrService);
   public orderSignal$ = new Subject<void>();
 
+  private connected = false;
+
   startConnection() {
+    if (this.connected) return;
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:5054/ordersHub')
+      .withUrl('http://localhost:5054/ordersHub', {
+        withCredentials: true
+      })
       .withAutomaticReconnect()
       .build();
 
