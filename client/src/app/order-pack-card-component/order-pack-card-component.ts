@@ -23,7 +23,7 @@ export class OrderPackCardComponent {
   onPack(id: string) {
     this.orderService.markPacked(id).subscribe({
       next: _ => {
-        this.toastr.success(`Order ${id} packed.`);
+        this.toastr.info(`Order ${id} packed.`);
         this.emitEvent.emit(true);
       },
       error: error => {
@@ -34,7 +34,7 @@ export class OrderPackCardComponent {
   onCancel(id: string) {
     this.orderService.markCancelled(id).subscribe({
       next: _ => {
-        this.toastr.info(`Order ${id} cancelled.`);
+        this.toastr.warning(`Order ${id} cancelled.`);
         this.emitEvent.emit(true);
       },
       error: error => {

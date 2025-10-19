@@ -1,6 +1,6 @@
 @if(contacts().length === 0) {
 <h6 style="margin: 1rem;">You have no contacts! Add contacts to continue. </h6>
-<button matButton color="primary" style="margin: 0.5rem" (click)="openAddContactDialog()">Add Contact</button>
+<button matButton color="primary" style="margin: 0.5rem" (click)="openAddContactDialog()">Add contact</button>
 } @else{
 <div class="d-flex" style="justify-content: space-between; margin: 1rem;">
     <h3 style="margin: 1rem;">Your contacts</h3>
@@ -8,7 +8,7 @@
         <mat-label>Search contacts</mat-label>
         <input matInput (input)="onFilterChange($event)" placeholder="Enter name" />
     </mat-form-field>
-    <button matButton color="primary" style="margin: 0.5rem" (click)="openAddContactDialog()">Add Contact</button>
+    <button matButton color="primary" style="margin: 0.5rem" (click)="openAddContactDialog()">Add contact</button>
 </div>
 
 }

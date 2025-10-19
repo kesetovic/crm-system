@@ -4,8 +4,6 @@ import { PaginatedResult } from '../_models/pagination';
 import { OrderParams } from '../_models/orderParams';
 import { setPaginatedResponse, setPaginationHeaders } from '../_helpers/paginationHelper';
 import { ToastrService } from 'ngx-toastr';
-import { MatCard } from "@angular/material/card";
-import { MatCardTitle } from '@angular/material/card';
 import { MatInputModule } from "@angular/material/input";
 import { MatPaginator } from "@angular/material/paginator";
 import { FormsModule } from '@angular/forms';
@@ -22,7 +20,7 @@ import { MatRippleModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-my-orders-component',
-  imports: [NgChartsModule, MatCard, MatRippleModule, MatInputModule, MatCardTitle, MatPaginator, FormsModule, OrderCardComponent, MatButtonModule, CurrencyPipe, CommonModule],
+  imports: [NgChartsModule, MatRippleModule, MatInputModule, MatPaginator, FormsModule, OrderCardComponent, MatButtonModule, CurrencyPipe, CommonModule],
   templateUrl: './my-orders-component.html',
   styleUrl: './my-orders-component.css'
 })
@@ -94,7 +92,7 @@ export class MyOrdersComponent implements OnInit {
           this.count++;
         }
       }, error: error => {
-        this.toastr.error('Something went wrong while loading your order data : ' + error.message);
+        this.toastr.error('Something went wrong while loading your orders data : ' + error.message);
       }
     });
   }

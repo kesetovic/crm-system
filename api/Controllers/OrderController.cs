@@ -113,7 +113,7 @@ public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseContr
             return BadRequest("Order cannot be cancelled");
         }
 
-        order.OrderStatus = OrderStatus.PACKED;
+        order.OrderStatus = OrderStatus.CANCELLED;
         unitOfWork.Orders.UpdateOrder(order);
 
         if (await unitOfWork.CompleteAsync())
@@ -130,6 +130,20 @@ public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseContr
         var orders = await unitOfWork.Orders.GetOrdersToPackAsync(orderParams);
         Response.AddPaginationHeader(orders);
         return Ok(orders);
+    }
+    [HttpDelete("{orderId}/remove")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult> RemoveOrder(string orderId)
+    {
+        var order = await unitOfWork.Orders.GetOrderByIdAsync(orderId);
+        if (order == null) return BadRequest("Order with given ID doesn't exist.");
+
+        unitOfWork.Orders.DeleteOrder(order);
+        if (await unitOfWork.CompleteAsync())
+        {
+            return Ok();
+        }
+        return BadRequest("Something went wrong while removing order.");
     }
 }
 

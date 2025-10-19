@@ -11,18 +11,18 @@
     <mat-chip style="background-color: #64DD17;width: fit-content;">Completed</mat-chip>
     }
     @case('cancelled'){
-    <mat-chip style="background-color: #F44336;;width: fit-content;">Cancelled</mat-chip>
+    <mat-chip style="background-color: #F44336;width: fit-content;">Cancelled</mat-chip>
     }
     }
     <mat-card-header>
         <mat-card-title>{{ order.customerName }} {{ order.customerLastName }}</mat-card-title>
-        <mat-card-subtitle style=" color: rgb(0, 174, 255);">{{order.orderId}}</mat-card-subtitle>
+        <mat-card-subtitle style="color: rgb(0, 174, 255);">{{order.orderId}}</mat-card-subtitle>
         <mat-card-subtitle>{{ order.orderDate | date: 'medium'}}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="mt-3">
         <p><strong>Product:</strong> {{ order.product }}</p>
-        <p><strong>Price:</strong> {{ order.orderPrice | currency:'BAM':'symbol'}}</p>
+        <p><strong>Price:</strong> {{ order.orderPrice | currency:'BAM':'symbol' }}</p>
 
 
         <p><strong>Bonus:</strong> {{ order.bonusAwarded }}</p>
@@ -30,5 +30,11 @@
         <p><strong>Notes:</strong> {{ order.orderNotes }}</p>
         }
     </mat-card-content>
-    <mat-card-footer></mat-card-footer>
+    <mat-card-footer style="margin-top: 1rem;">
+        <button [disabled]="order.orderStatus != 'PACKED'" matButton="elevated" style="margin-right: 0.5rem;"
+            (click)="onComplete(order.orderId)">Complete</button>
+        <button [disabled]="(order.orderStatus == 'CANCELLED') || (order.orderStatus == 'COMPLETED')" matButton="tonal"
+            (click)="onCancel(order.orderId)" style="margin-right: 0.5rem;">Cancel</button>
+        <button matButton="text" (click)="onRemove(order.orderId)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+    </mat-card-footer>
 </mat-card>

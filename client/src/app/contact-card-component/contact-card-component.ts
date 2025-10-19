@@ -1,6 +1,5 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Callee } from '../_models/callee';
 import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUser, faPhone, faHome, faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -27,7 +26,7 @@ export class ContactCardComponent {
   removeContact(id: string) {
     this.contactService.deleteContact(id).subscribe({
       next: () => {
-        this.toastrService.success('Contact removed successfully');
+        this.toastrService.info('Contact removed successfully');
         this.contactDeleted.emit(this.contact?.calleeId);
       },
       error: (error) => {

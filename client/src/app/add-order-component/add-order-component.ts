@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AddOrderDto } from '../_models/addOrderDto';
 import { OrderService } from '../_services/order-service';
 import { ToastrService } from 'ngx-toastr';
-import { MatCard, MatCardModule } from "@angular/material/card";
+import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-add-order-component',
-  imports: [MatCard, MatCardModule, MatInputModule, ReactiveFormsModule, MatButtonModule],
+  imports: [MatCardModule, MatInputModule, ReactiveFormsModule, MatButtonModule],
   templateUrl: './add-order-component.html',
   styleUrl: './add-order-component.css'
 })
@@ -25,7 +25,7 @@ export class AddOrderComponent implements OnInit {
       customerName: ['', Validators.required],
       customerLastName: ['', Validators.required],
       customerAddress: ['', Validators.required],
-      customerPhone: ['', [Validators.required, Validators.pattern('^[0-9]{10,15}$')]],
+      customerPhone: ['', [Validators.required, Validators.pattern(/^\+\d{6,15}$/)]],
       product: ['', Validators.required],
       orderPrice: [0, [Validators.required, Validators.min(0)]],
       orderNotes: [''],

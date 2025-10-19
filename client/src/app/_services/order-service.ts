@@ -22,6 +22,10 @@ export class OrderService {
     return this.http.get<OrderDto[]>(this.baseUrl + 'order/fetch/topack', { observe: 'response', params });
   }
 
+  getAllOrders(params: any) {
+    return this.http.get<OrderDto[]>(this.baseUrl + 'order/fetch/all', { observe: 'response', params });
+  }
+
   markPacked(id: string) {
     return this.http.put(this.baseUrl + 'order/' + id + '/pack', {});
   }
@@ -32,5 +36,9 @@ export class OrderService {
 
   markCompleted(id: string) {
     return this.http.put(this.baseUrl + 'order/' + id + '/complete', {});
+  }
+
+  removeOrder(id: string) {
+    return this.http.delete(this.baseUrl + 'order/' + id + '/remove');
   }
 }

@@ -1,43 +1,41 @@
-import { Component, inject, NgModule, signal } from '@angular/core';
-import { MatCardModule } from "@angular/material/card";
-import { MatInputModule } from "@angular/material/input";
+import { Component, inject, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { setPaginationHeaders, setPaginatedResponse } from '../_helpers/paginationHelper';
 import { OrderDto } from '../_models/orderDto';
 import { OrderParams } from '../_models/orderParams';
 import { PaginatedResult } from '../_models/pagination';
 import { OrderService } from '../_services/order-service';
-import { StatsService } from '../_services/stats-service';
-import { CommonModule, NgClass } from '@angular/common';
-import { FormsModule, NgForm, NgModel } from '@angular/forms';
-import { OrderCardComponent } from "../order-card-component/order-card-component";
-import { MatPaginator } from "@angular/material/paginator";
-import { OrderPackCardComponent } from "../order-pack-card-component/order-pack-card-component";
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginator } from '@angular/material/paginator';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatRippleModule } from '@angular/material/core';
+import { AllOrdersCardComponent } from "../all-orders-card-component/all-orders-card-component";
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-orders-pack-component',
-  imports: [MatCardModule, MatInputModule, CommonModule, FormsModule, MatButtonModule, MatPaginator, OrderPackCardComponent],
-  templateUrl: './orders-pack-component.html',
-  styleUrl: './orders-pack-component.css'
+  selector: 'app-all-orders-component',
+  imports: [MatCardModule, MatInputModule, MatPaginator, CommonModule, FormsModule, MatRippleModule, AllOrdersCardComponent, MatButtonModule],
+  templateUrl: './all-orders-component.html',
+  styleUrl: './all-orders-component.css'
 })
-export class OrdersPackComponent {
+export class AllOrdersComponent {
   private orderService = inject(OrderService);
   private toastr = inject(ToastrService);
 
-
   paginatedResult = signal<PaginatedResult<OrderDto[]> | null>(null);
-  id: string = "";
-  orderParams = signal<OrderParams>(new OrderParams(this.id));
+  name: string = "";
+  orderParams = signal<OrderParams>(new OrderParams(this.name));
+
   count: number = 0;
 
   ngOnInit() {
     this.getOrders();
   }
 
-
   resetOrderParams() {
-    this.orderParams.set(new OrderParams(this.id));
+    this.orderParams.set(new OrderParams(this.name));
   }
   resetFilters() {
     this.resetOrderParams();
@@ -49,15 +47,15 @@ export class OrdersPackComponent {
     params = params.append('minValue', this.orderParams().minValue ?? 0);
     params = params.append('maxValue', this.orderParams().maxValue ?? 10000);
     params = params.append('orderBy', this.orderParams().orderBy);
-    this.orderService.getOrdersToPack(params).subscribe({
+    this.orderService.getAllOrders(params).subscribe({
       next: response => {
         setPaginatedResponse(response, this.paginatedResult);
         if (this.count == 0) {
-          this.toastr.info('Orders to pack data loaded successfully')
+          this.toastr.info('All orders data loaded successfully')
           this.count++;
         }
       }, error: error => {
-        this.toastr.error('Something went wrong while loading orders to pack data : ' + error.message);
+        this.toastr.error('Something went wrong while loading all orders data : ' + error.message);
       }
     });
   }
@@ -76,4 +74,5 @@ export class OrdersPackComponent {
     this.orderParams.set({ ...currentParams });
     this.getOrders();
   }
+
 }
