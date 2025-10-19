@@ -1,13 +1,14 @@
-<div class="d-flex" style="justify-content: space-between; margin: 1rem; align-items: center;">
-    <p>@if(this.authService.currentUser()?.roles?.includes('Admin')){<fa-icon style="margin-right: 0.5rem;"
+<div class="d-flex justify-content-between m-3 align-items-center">
+    <p>@if(this.authService.currentUser()?.roles?.includes('Admin')){<fa-icon class="me-2"
             [icon]="faUserPlus"></fa-icon>}
-        @else { <fa-icon style="margin-right: 0.5rem;" [icon]="faUser"></fa-icon> }<span
+        @else { <fa-icon class="me-2" [icon]="faUser"></fa-icon> }<span
             style="font-weight: bold;">{{this.authService.currentUser()?.username}}</span> is
         currently connected to the
         system</p>
     <button matButton (click)="logout()">Logout</button>
 </div>
 <mat-tab-group dynamicHeight>
+    @if(this.authService.currentUser()?.roles?.includes('Operater')){
     <mat-tab label="Contacts">
         <app-contacts-component></app-contacts-component>
     </mat-tab>
@@ -16,14 +17,17 @@
     </mat-tab>
     <mat-tab label="My orders">
         <app-my-orders-component></app-my-orders-component>
-    </mat-tab>
+    </mat-tab>}
+    @if(this.authService.currentUser()?.roles?.includes('Packer')){
     <mat-tab label="To pack">
         <app-orders-pack-component></app-orders-pack-component>
     </mat-tab>
+    }
+    @if(this.authService.currentUser()?.roles?.includes('Admin')){
     <mat-tab label="All orders">
         <app-all-orders-component></app-all-orders-component>
     </mat-tab>
     <mat-tab label="Stats">
-        Content 6
-    </mat-tab>
+        <app-aggregate-stats-component></app-aggregate-stats-component>
+    </mat-tab>}
 </mat-tab-group>

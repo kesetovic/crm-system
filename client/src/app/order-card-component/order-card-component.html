@@ -1,22 +1,21 @@
-<mat-card matRipple [matRippleColor]="'rgba(0,0,212,0.1)'" class="mat-elevation-z3 p-3" style="min-width: 300px;"
-    appearance="raised">
+<mat-card matRipple [matRippleColor]="'rgba(0,0,212,0.1)'" class="mat-elevation-z3 p-3 card-order" appearance="raised">
     @switch (order.orderStatus.toLowerCase()) {
     @case ('new') {
-    <mat-chip style="background-color: #EA80FC;width: fit-content;">New</mat-chip>
+    <mat-chip class="chip-new">New</mat-chip>
     }
     @case ('packed') {
-    <mat-chip style="background-color: #00B0FF;width: fit-content;">Packed</mat-chip>
+    <mat-chip class="chip-packed">Packed</mat-chip>
     }
     @case('completed') {
-    <mat-chip style="background-color: #64DD17;width: fit-content;">Completed</mat-chip>
+    <mat-chip class="chip-completed">Completed</mat-chip>
     }
     @case('cancelled'){
-    <mat-chip style="background-color: #F44336;;width: fit-content;">Cancelled</mat-chip>
+    <mat-chip class="chip-cancelled">Cancelled</mat-chip>
     }
     }
     <mat-card-header>
         <mat-card-title>{{ order.customerName }} {{ order.customerLastName }}</mat-card-title>
-        <mat-card-subtitle style=" color: rgb(0, 174, 255);">{{order.orderId}}</mat-card-subtitle>
+        <mat-card-subtitle class="id-color">{{order.orderId}}</mat-card-subtitle>
         <mat-card-subtitle>{{ order.orderDate | date: 'medium'}}</mat-card-subtitle>
     </mat-card-header>
 
@@ -27,7 +26,7 @@
 
         <p><strong>Bonus:</strong> {{ order.bonusAwarded }}</p>
         @if(order.orderNotes){
-        <p><strong>Notes:</strong> {{ order.orderNotes }}</p>
+        <p class="scroll-on-hover"><span><strong>Notes:</strong> {{ order.orderNotes }}</span></p>
         }
     </mat-card-content>
     <mat-card-footer></mat-card-footer>

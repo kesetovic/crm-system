@@ -1,18 +1,18 @@
 @if(contacts().length === 0) {
-<h6 style="margin: 1rem;">You have no contacts! Add contacts to continue. </h6>
-<button matButton color="primary" style="margin: 0.5rem" (click)="openAddContactDialog()">Add contact</button>
+<h6 class="m-3">You have no contacts! Add contacts to continue. </h6>
+<button matButton color="primary" class="m-2" (click)="openAddContactDialog()">Add contact</button>
 } @else{
-<div class="d-flex" style="justify-content: space-between; margin: 1rem;">
-    <h3 style="margin: 1rem;">Your contacts</h3>
+<div class="d-flex justify-content-between m-3 flex-wrap">
+    <h3 class="m-3">Your contacts</h3>
     <mat-form-field appearance="outline">
         <mat-label>Search contacts</mat-label>
         <input matInput (input)="onFilterChange($event)" placeholder="Enter name" />
     </mat-form-field>
-    <button matButton color="primary" style="margin: 0.5rem" (click)="openAddContactDialog()">Add contact</button>
+    <button matButton color="primary" (click)="openAddContactDialog()">Add contact</button>
 </div>
 
 }
-<div class="d-flex">
+<div class="d-flex flex-wrap">
     @for(contact of contactsCache(); track $index) {
     <app-contact-card-component [contact]="contact"
         (contactDeleted)="onContactDeleted($event)"></app-contact-card-component>

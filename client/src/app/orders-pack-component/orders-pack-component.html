@@ -1,5 +1,5 @@
 <h3 class="m-3">Orders to pack</h3>
-<div class="filters d-flex gap-3 m-3 p-3" style="flex-wrap: wrap;">
+<div class="filters d-flex gap-3 m-3 p-3 flex-wrap">
     <mat-form-field appearance="outline">
         <mat-label>Order ID</mat-label>
         <input matInput [(ngModel)]="orderParams().customerNameString" (input)="getOrders()" />
@@ -22,7 +22,7 @@
     </div>
     <button matButton="filled" (click)="resetFilters()">Reset filters</button>
 </div>
-<div class="d-flex gap-3 m-3" style="flex-wrap: wrap;">
+<div class="d-flex gap-3 m-3 flex-wrap">
     @for (item of paginatedResult()?.items; track $index) {
     <app-order-pack-card-component [order]="item" (emitEvent)="getOrders()"></app-order-pack-card-component>
     }

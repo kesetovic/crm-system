@@ -1,0 +1,7 @@
+.d-flex {
+    align-items: stretch;
+}
+
+app-all-orders-card-component {
+    width: min(400px, 100%);
+}

@@ -26,7 +26,7 @@ export class AddContactDialogComponent implements OnInit {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\+\d{6,15}$/)]],
     })
   }
 

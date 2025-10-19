@@ -1,0 +1,41 @@
+<div class="chart-grid">
+    <div>
+        <h5>Global stats (last 7 days)</h5>
+        <div>
+            <div>
+                <h6>Aggregated count</h6>
+                <canvas baseChart [data]="globalOrdersChart" chartType="bar"></canvas>
+            </div>
+            <div>
+                <h6>Aggregated revenue</h6>
+                <canvas baseChart [data]="globalRevenueChart" chartType="bar"></canvas>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h5>Per-user daily stats (last 7 days)</h5>
+        <div>
+            <div>
+                <h6>Aggregated count</h6>
+                <canvas baseChart [data]="perUserDailyOrdersChart" chartType="line"></canvas>
+            </div>
+            <div>
+                <h6>Aggregated revenue</h6>
+                <canvas baseChart [data]="perUserDailyRevenueChart" chartType="line"></canvas>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h5>Per-user monthly stats (last 12 months)</h5>
+        <div>
+            <div>
+                <h6>Aggregated count</h6>
+                <canvas baseChart [data]="perUserMonthlyOrdersChart" chartType="line"></canvas>
+            </div>
+            <div>
+                <h6>Aggregated revenue</h6>
+                <canvas baseChart [data]="perUserMonthlyRevenueChart" chartType="line"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,3 +9,27 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.chip-new {
+    background-color: #EA80FC !important;
+    width: fit-content !important;
+}
+
+.chip-packed {
+    background-color: #00B0FF !important;
+    width: fit-content !important;
+}
+
+.chip-completed {
+    background-color: #64DD17 !important;
+    width: fit-content !important;
+}
+
+.chip-cancelled {
+    background-color: #F44336 !important;
+    width: fit-content !important;
+}
+
+.id-color {
+    color: rgb(0, 174, 255) !important
+}

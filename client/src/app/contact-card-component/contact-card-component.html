@@ -1,4 +1,4 @@
-<mat-card appearance="raised" style="width: fit-content; margin: 0.5rem;">
+<mat-card appearance="raised" class="contact-card">
     <mat-card-header>
         <mat-card-title>{{ contact?.firstName }} {{ contact?.lastName }}</mat-card-title>
         <mat-card-subtitle>{{ contact?.email }}</mat-card-subtitle>
@@ -8,7 +8,7 @@
         <p><fa-icon [icon]="faHome"></fa-icon>{{ contact?.address }}</p>
     </div>
     <mat-card-actions align="start">
-        <button matButton="tonal" style="margin-right: 0.5rem;">Call contact</button>
+        <button matButton="tonal" class="me-2">Call contact</button>
         <button matButton (click)="removeContact(contact!.calleeId)"><fa-icon [icon]="faTrashCan"></fa-icon> Remove
             contact</button>
     </mat-card-actions>

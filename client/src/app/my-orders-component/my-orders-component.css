@@ -1,0 +1,12 @@
+.chart {
+    width: 100%;
+    max-width: 800px;
+}
+
+.d-flex {
+    align-items: stretch;
+}
+
+app-order-card-component {
+    width: min(400px, 100%);
+}

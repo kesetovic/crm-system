@@ -228,9 +228,7 @@ export class MyOrdersComponent implements OnInit {
           borderColor: '#42A5F5',
           backgroundColor: 'rgba(66,165,245,0.3)',
           hoverBackgroundColor: '#42a5f5',
-          fill: true,
-          tension: 0.4,
-          borderWidth: 3
+          borderWidth: 3,
         },
         {
           label: 'Average daily revenue (other users)',
