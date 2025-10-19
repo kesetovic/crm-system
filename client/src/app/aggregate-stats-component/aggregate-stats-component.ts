@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ToastrService } from 'ngx-toastr';
+import { SignalRService } from '../_services/signal-r-service';
 
 @Component({
   selector: 'app-aggregate-stats-component',
@@ -17,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AggregateStatsComponent implements OnInit {
   private statsService = inject(StatsService);
   private toastr = inject(ToastrService);
+  private signalRService = inject(SignalRService);
 
   globalOrdersChart!: ChartConfiguration<'bar'>['data'];
   globalRevenueChart!: ChartConfiguration<'bar'>['data'];
@@ -26,6 +28,16 @@ export class AggregateStatsComponent implements OnInit {
   perUserMonthlyRevenueChart!: ChartConfiguration<'line'>['data'];
 
   ngOnInit(): void {
+    this.signalRService.startConnection();
+    this.signalRService.orderSignal$.subscribe(() => {
+      console.log('Order signal received, refetching..');
+      this.reloadStats();
+    })
+
+    this.getStats();
+  }
+
+  private getStats() {
     this.statsService.getAggregateStats().subscribe({
       next: (stats) => {
         this.toastr.info('Stats loaded sucessfully');
@@ -33,6 +45,15 @@ export class AggregateStatsComponent implements OnInit {
         this.generatePerUserCharts(stats);
       },
       error: (err) => this.toastr.error('Error loading stats : ' + err.message)
+    });
+  }
+  private reloadStats() {
+    this.statsService.getAggregateStats().subscribe({
+      next: (stats) => {
+        this.generateGlobalCharts(stats);
+        this.generatePerUserCharts(stats);
+      },
+      error: (err) => this.toastr.error('Error reloading stats : ' + err.message)
     });
   }
 

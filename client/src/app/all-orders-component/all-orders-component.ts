@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MatRippleModule } from '@angular/material/core';
 import { AllOrdersCardComponent } from "../all-orders-card-component/all-orders-card-component";
 import { MatButtonModule } from '@angular/material/button';
+import { SignalRService } from '../_services/signal-r-service';
 
 @Component({
   selector: 'app-all-orders-component',
@@ -23,6 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class AllOrdersComponent {
   private orderService = inject(OrderService);
   private toastr = inject(ToastrService);
+  private signalRService = inject(SignalRService);
 
   paginatedResult = signal<PaginatedResult<OrderDto[]> | null>(null);
   name: string = "";
@@ -31,6 +33,11 @@ export class AllOrdersComponent {
   count: number = 0;
 
   ngOnInit() {
+    this.signalRService.startConnection();
+    this.signalRService.orderSignal$.subscribe(() => {
+      this.getOrders();
+    })
+
     this.getOrders();
   }
 

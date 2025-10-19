@@ -1,5 +1,6 @@
 using api.Data;
 using api.Extensions;
+using api.Hubs;
 using api.Model;
 using Microsoft.AspNetCore.Identity;
 
@@ -26,5 +27,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<OrderHub>("/ordersHub");
 
 app.Run();

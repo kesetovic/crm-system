@@ -14,6 +14,7 @@ import { OrderCardComponent } from "../order-card-component/order-card-component
 import { MatPaginator } from "@angular/material/paginator";
 import { OrderPackCardComponent } from "../order-pack-card-component/order-pack-card-component";
 import { MatButtonModule } from '@angular/material/button';
+import { SignalRService } from '../_services/signal-r-service';
 
 @Component({
   selector: 'app-orders-pack-component',
@@ -24,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class OrdersPackComponent {
   private orderService = inject(OrderService);
   private toastr = inject(ToastrService);
-
+  private signalRService = inject(SignalRService);
 
   paginatedResult = signal<PaginatedResult<OrderDto[]> | null>(null);
   id: string = "";
@@ -32,6 +33,11 @@ export class OrdersPackComponent {
   count: number = 0;
 
   ngOnInit() {
+    this.signalRService.startConnection();
+    this.signalRService.orderSignal$.subscribe(() => {
+      this.getOrders();
+    })
+
     this.getOrders();
   }
 

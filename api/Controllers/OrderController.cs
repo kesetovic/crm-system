@@ -6,10 +6,11 @@ using api.Model;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace api.Controllers;
 
-public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseController
+public class OrderController(IUnitOfWork unitOfWork, IMapper mapper, IHubContext hubContext) : BaseController
 {
     [HttpGet("fetch")]
     [Authorize]
@@ -20,6 +21,7 @@ public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseContr
 
         var orders = await unitOfWork.Orders.GetOrdersForUserAsync(username, orderParams);
         Response.AddPaginationHeader(orders);
+
         return Ok(orders);
     }
     [HttpGet("fetch/all")]
@@ -57,6 +59,7 @@ public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseContr
 
         if (await unitOfWork.CompleteAsync())
         {
+            await hubContext.Clients.All.SendAsync("OrderSignal");
             return Ok(mapper.Map<OrderDto>(newOrder));
         }
 
@@ -75,6 +78,7 @@ public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseContr
 
         if (await unitOfWork.CompleteAsync())
         {
+            await hubContext.Clients.All.SendAsync("OrderSignal");
             return Ok();
         }
 
@@ -94,6 +98,7 @@ public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseContr
 
         if (await unitOfWork.CompleteAsync())
         {
+            await hubContext.Clients.All.SendAsync("OrderSignal");
             return Ok();
         }
 
@@ -118,6 +123,7 @@ public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseContr
 
         if (await unitOfWork.CompleteAsync())
         {
+            await hubContext.Clients.All.SendAsync("OrderSignal");
             return Ok();
         }
 
@@ -141,6 +147,7 @@ public class OrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseContr
         unitOfWork.Orders.DeleteOrder(order);
         if (await unitOfWork.CompleteAsync())
         {
+            await hubContext.Clients.All.SendAsync("OrderSignal");
             return Ok();
         }
         return BadRequest("Something went wrong while removing order.");

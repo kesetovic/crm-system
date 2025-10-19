@@ -33,6 +33,7 @@
     "@angular/router": "^20.3.0",
     "@fortawesome/angular-fontawesome": "^3.0.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@microsoft/signalr": "^9.0.6",
     "@tsparticles/angular": "^3.0.0",
     "@tsparticles/engine": "^3.9.1",
     "@tsparticles/slim": "^3.9.1",

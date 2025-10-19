@@ -16,6 +16,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
 import { MatRippleModule } from '@angular/material/core';
+import { SignalRService } from '../_services/signal-r-service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class MyOrdersComponent implements OnInit {
   private orderService = inject(OrderService);
   private toastr = inject(ToastrService);
   private statsService = inject(StatsService);
+  private signalRService = inject(SignalRService);
 
   paginatedResult = signal<PaginatedResult<OrderDto[]> | null>(null);
   name: string = "";
@@ -66,6 +68,12 @@ export class MyOrdersComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.signalRService.startConnection();
+    this.signalRService.orderSignal$.subscribe(() => {
+      this.getOrders();
+      this.getSummary();
+    })
+
     this.getOrders();
     this.getSummary();
   }
