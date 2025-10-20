@@ -1,5 +1,6 @@
 using api.Data;
 using api.DTOs;
+using api.Helpers;
 using api.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ public class StatsService(DataContext context) : IStatsService
 
         var globalDailyOrders = await context.Orders
             .Where(o => o.OrderDate.Date >= startDate)
+            .Where(o => o.OrderStatus.Equals(OrderStatus.COMPLETED))
             .GroupBy(o => o.OrderDate.Date)
             .Select(g => new DailyGlobalDto
             {
@@ -26,6 +28,7 @@ public class StatsService(DataContext context) : IStatsService
 
         var globalDailyRevenue = await context.Orders
             .Where(o => o.OrderDate.Date >= startDate)
+            .Where(o => o.OrderStatus.Equals(OrderStatus.COMPLETED))
             .GroupBy(o => o.OrderDate.Date)
             .Select(g => new DailyGlobalDto
             {
@@ -37,6 +40,7 @@ public class StatsService(DataContext context) : IStatsService
 
         var perUserDailyOrders = await context.Orders
             .Where(o => o.OrderDate.Date >= startDate)
+            .Where(o => o.OrderStatus.Equals(OrderStatus.COMPLETED))
             .GroupBy(o => new { o.AppUser.UserName, o.OrderDate.Date })
             .Select(g => new PerUserDailyDto
             {
@@ -49,6 +53,7 @@ public class StatsService(DataContext context) : IStatsService
 
         var perUserDailyRevenue = await context.Orders
             .Where(o => o.OrderDate.Date >= startDate)
+            .Where(o => o.OrderStatus.Equals(OrderStatus.COMPLETED))
             .GroupBy(o => new { o.AppUser.UserName, o.OrderDate.Date })
             .Select(g => new PerUserDailyDto
             {
@@ -61,6 +66,7 @@ public class StatsService(DataContext context) : IStatsService
 
         var perUserMonthlyOrders = await context.Orders
             .Where(o => o.OrderDate >= startMonth)
+            .Where(o => o.OrderStatus.Equals(OrderStatus.COMPLETED))
             .GroupBy(o => new { o.AppUser.UserName, o.OrderDate.Year, o.OrderDate.Month })
             .Select(g => new PerUserMonthlyDto
             {
@@ -74,6 +80,7 @@ public class StatsService(DataContext context) : IStatsService
 
         var perUserMonthlyRevenue = await context.Orders
             .Where(o => o.OrderDate >= startMonth)
+            .Where(o => o.OrderStatus.Equals(OrderStatus.COMPLETED))
             .GroupBy(o => new { o.AppUser.UserName, o.OrderDate.Year, o.OrderDate.Month })
             .Select(g => new PerUserMonthlyDto
             {
@@ -110,6 +117,7 @@ public class StatsService(DataContext context) : IStatsService
 
         var dailySales = await userOrders
             .Where(o => o.OrderDate.Date >= startDate)
+            .Where(o => o.OrderStatus.Equals(OrderStatus.COMPLETED))
             .GroupBy(o => o.OrderDate.Date)
             .Select(g => new DailySalesDto
             {
@@ -125,6 +133,7 @@ public class StatsService(DataContext context) : IStatsService
         var averageDailySales = await context.Orders
             .Where(o => o.OrderDate.Date >= startDate)
             .Where(o => o.AppUser.UserName != username)
+            .Where(o => o.OrderStatus.Equals(OrderStatus.COMPLETED))
             .GroupBy(o => new { o.AppUserId, Date = o.OrderDate.Date })
             .Select(g => new
             {

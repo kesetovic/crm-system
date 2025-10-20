@@ -15,6 +15,6 @@
 <div class="d-flex flex-wrap">
     @for(contact of contactsCache(); track $index) {
     <app-contact-card-component [contact]="contact"
-        (contactDeleted)="onContactDeleted($event)"></app-contact-card-component>
+        (contactDeleted)="removeContact($event)"></app-contact-card-component>
     }
 </div>

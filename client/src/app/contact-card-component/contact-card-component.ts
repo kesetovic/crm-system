@@ -20,5 +20,7 @@ export class ContactCardComponent {
   faHome = faHome;
   faTrashCan = faTrashCan;
 
-
+  removeContact() {
+    this.contactDeleted.emit(this.contact?.calleeId);
+  }
 }

@@ -37,7 +37,8 @@
         <button [disabled]="order.orderStatus != 'PACKED'" matButton="elevated" class="me-3"
             (click)=" onComplete()">Complete</button>}
         @if(this.cancel){
-        <button matButton="tonal" (click)="onCancel()">Cancel</button>}
+        <button [disabled]="(order.orderStatus == 'CANCELLED') || (order.orderStatus =='COMPLETED')" matButton="tonal"
+            (click)="onCancel()">Cancel</button>}
 
         @if(this.remove){
         <button matButton="text" (click)="onRemove()"><fa-icon [icon]="faTrashCan"></fa-icon></button>
