@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AddOrderDto } from '../_models/addOrderDto';
 import { OrderService } from '../_services/order-service';
 import { ToastrService } from 'ngx-toastr';
@@ -32,12 +32,13 @@ export class AddOrderComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(formDirective: FormGroupDirective) {
     if (this.orderForm.valid) {
       const order: AddOrderDto = this.orderForm.value;
       this.orderService.addOrder(order).subscribe({
         next: response => {
           this.toastr.success(`Order ${response.orderId} added successfully`);
+          formDirective.resetForm();
         },
         error: error => {
           this.toastr.error('Failed to add order : ' + error.message);
