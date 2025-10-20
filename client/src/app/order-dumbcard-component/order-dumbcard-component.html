@@ -1,5 +1,4 @@
-<mat-card matRipple [matRippleColor]="'rgba(0,0,212,0.1)'" class="mat-elevation-z3 p-3" style="min-width: 300px;"
-    appearance="raised">
+<mat-card matRipple [matRippleColor]="'rgba(0,0,212,0.1)'" class="mat-elevation-z3 p-3" appearance="raised">
     @switch (order.orderStatus.toLowerCase()) {
     @case ('new') {
     <mat-chip class="chip-new">New</mat-chip>
@@ -31,7 +30,17 @@
         }
     </mat-card-content>
     <mat-card-footer class=" mt-2">
-        <button matButton="elevated" class="me-2" (click)="onPack(order.orderId)">Pack</button>
-        <button matButton="tonal" (click)="onCancel(order.orderId)">Cancel</button>
+        @if(this.pack){
+        <button matButton="elevated" class="me-2" (click)="onPack()">Pack</button>
+        }
+        @if(this.complete){
+        <button [disabled]="order.orderStatus != 'PACKED'" matButton="elevated" class="me-3"
+            (click)=" onComplete()">Complete</button>}
+        @if(this.cancel){
+        <button matButton="tonal" (click)="onCancel()">Cancel</button>}
+
+        @if(this.remove){
+        <button matButton="text" (click)="onRemove()"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+        }
     </mat-card-footer>
 </mat-card>

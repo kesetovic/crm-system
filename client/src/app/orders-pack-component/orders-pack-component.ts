@@ -7,18 +7,16 @@ import { OrderDto } from '../_models/orderDto';
 import { OrderParams } from '../_models/orderParams';
 import { PaginatedResult } from '../_models/pagination';
 import { OrderService } from '../_services/order-service';
-import { StatsService } from '../_services/stats-service';
 import { CommonModule, NgClass } from '@angular/common';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
-import { OrderCardComponent } from "../order-card-component/order-card-component";
 import { MatPaginator } from "@angular/material/paginator";
-import { OrderPackCardComponent } from "../order-pack-card-component/order-pack-card-component";
 import { MatButtonModule } from '@angular/material/button';
 import { SignalRService } from '../_services/signal-r-service';
+import { OrderDumbCardComponent } from "../order-dumbcard-component/order-dumbcard-component";
 
 @Component({
   selector: 'app-orders-pack-component',
-  imports: [MatCardModule, MatInputModule, CommonModule, FormsModule, MatButtonModule, MatPaginator, OrderPackCardComponent],
+  imports: [MatCardModule, MatInputModule, CommonModule, FormsModule, MatButtonModule, MatPaginator, OrderDumbCardComponent],
   templateUrl: './orders-pack-component.html',
   styleUrl: './orders-pack-component.css'
 })
@@ -80,5 +78,40 @@ export class OrdersPackComponent {
     currentParams.orderBy = orderBy;
     this.orderParams.set({ ...currentParams });
     this.getOrders();
+  }
+
+  private onPack(id: string) {
+    this.orderService.markPacked(id).subscribe({
+      next: _ => {
+        this.toastr.info(`Order ${id} packed.`);
+        this.getOrders();
+      },
+      error: error => {
+        this.toastr.error(`Error packing order ${id} : ` + error.message);
+      }
+    })
+  }
+
+  private onCancel(id: string) {
+    this.orderService.markCancelled(id).subscribe({
+      next: _ => {
+        this.toastr.warning(`Order ${id} cancelled.`);
+        this.getOrders();
+      },
+      error: error => {
+        this.toastr.error(`Error cancelling order ${id} : ` + error.message);
+      }
+    })
+  }
+
+  handleEventChange([event, id]: [string, string]) {
+    switch (event) {
+      case 'pack':
+        this.onPack(id);
+        break;
+      case 'cancel':
+        this.onCancel(id);
+        break;
+    }
   }
 }

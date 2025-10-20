@@ -59,7 +59,7 @@ export class ContactsComponent implements OnInit {
     });
   }
 
-  onContactDeleted(deletedContactId: string): void {
+  private onContactDeleted(deletedContactId: string): void {
     this.contacts.update(contacts => contacts.filter(c => c.calleeId !== deletedContactId));
     this.filterContacts();
   }
@@ -75,5 +75,17 @@ export class ContactsComponent implements OnInit {
     this.contactsCache.set(this.contacts().filter(contact =>
       contact.firstName.toLowerCase().concat(" ").concat(contact.lastName.toLowerCase()).includes(filter)
     ))
+  }
+
+  removeContact(id: string) {
+    this.contactsService.deleteContact(id).subscribe({
+      next: () => {
+        this.toastrService.info('Contact removed successfully');
+        this.onContactDeleted(id);
+      },
+      error: (error) => {
+        this.toastrService.error('Failed to remove contact: ' + error.message);
+      }
+    });
   }
 }

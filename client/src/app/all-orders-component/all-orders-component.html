@@ -25,7 +25,8 @@
 </div>
 <div class="d-flex gap-3 m-3 flex-wrap">
     @for (item of paginatedResult()?.items; track $index) {
-    <app-all-orders-card-component [order]="item" (emitEvent)="getOrders()"></app-all-orders-card-component>
+    <app-order-dumbcard-component [order]="item" [complete]="true" [cancel]="true" [remove]="true"
+        (emitChange)="handleEventChange($event)"></app-order-dumbcard-component>
     }
 </div>
 

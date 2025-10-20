@@ -11,13 +11,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatRippleModule } from '@angular/material/core';
-import { AllOrdersCardComponent } from "../all-orders-card-component/all-orders-card-component";
 import { MatButtonModule } from '@angular/material/button';
 import { SignalRService } from '../_services/signal-r-service';
+import { OrderDumbCardComponent } from "../order-dumbcard-component/order-dumbcard-component";
 
 @Component({
   selector: 'app-all-orders-component',
-  imports: [MatCardModule, MatInputModule, MatPaginator, CommonModule, FormsModule, MatRippleModule, AllOrdersCardComponent, MatButtonModule],
+  imports: [MatCardModule, MatInputModule, MatPaginator, CommonModule, FormsModule, MatRippleModule, MatButtonModule, OrderDumbCardComponent],
   templateUrl: './all-orders-component.html',
   styleUrl: './all-orders-component.css'
 })
@@ -81,4 +81,53 @@ export class AllOrdersComponent {
     this.getOrders();
   }
 
+  private onComplete(id: string) {
+    this.orderService.markCompleted(id).subscribe({
+      next: _ => {
+        this.toastr.success(`Order ${id} completed.`);
+        this.getOrders();
+      },
+      error: error => {
+        this.toastr.error(`Error completing order ${id} : ` + error.message);
+      }
+    })
+  }
+  private onCancel(id: string) {
+    this.orderService.markCancelled(id).subscribe({
+      next: _ => {
+        this.toastr.warning(`Order ${id} cancelled.`);
+        this.getOrders();
+      },
+      error: error => {
+        this.toastr.error(`Error cancelling order ${id} : ` + error.message);
+      }
+    })
+  }
+
+  private onRemove(id: string) {
+    if (confirm(`Are you sure you want to delete order ${id}?`)) {
+      this.orderService.removeOrder(id).subscribe({
+        next: _ => {
+          this.toastr.info(`Order ${id} removed.`);
+          this.getOrders();
+        },
+        error: error => {
+          this.toastr.error(`Error removing order ${id} :` + error.message);
+        }
+      })
+    }
+  }
+
+  handleEventChange([event, id]: [string, string]) {
+    switch (event) {
+      case 'complete':
+        this.onComplete(id);
+        break;
+      case 'cancel':
+        this.onCancel(id);
+        break;
+      case 'remove':
+        this.onRemove(id);
+    }
+  }
 }

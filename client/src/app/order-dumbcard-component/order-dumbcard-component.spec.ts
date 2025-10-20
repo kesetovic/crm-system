@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrderPackCardComponent } from './order-pack-card-component';
+import { OrderDumbcardComponent } from './order-dumbcard-component';
 
-describe('OrderPackCardComponent', () => {
-  let component: OrderPackCardComponent;
-  let fixture: ComponentFixture<OrderPackCardComponent>;
+describe('OrderDumbcardComponent', () => {
+  let component: OrderDumbcardComponent;
+  let fixture: ComponentFixture<OrderDumbcardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OrderPackCardComponent]
+      imports: [OrderDumbcardComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OrderPackCardComponent);
+    fixture = TestBed.createComponent(OrderDumbcardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

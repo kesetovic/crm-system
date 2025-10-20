@@ -8,7 +8,6 @@ import { MatInputModule } from "@angular/material/input";
 import { MatPaginator } from "@angular/material/paginator";
 import { FormsModule } from '@angular/forms';
 import { OrderDto } from '../_models/orderDto';
-import { OrderCardComponent } from "../order-card-component/order-card-component";
 import { MatButtonModule } from '@angular/material/button';
 import { StatsService } from '../_services/stats-service';
 import { OrderSummaryDto } from '../_models/orderSummaryDto';
@@ -17,11 +16,12 @@ import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
 import { MatRippleModule } from '@angular/material/core';
 import { SignalRService } from '../_services/signal-r-service';
+import { OrderDumbCardComponent } from '../order-dumbcard-component/order-dumbcard-component';
 
 
 @Component({
   selector: 'app-my-orders-component',
-  imports: [NgChartsModule, MatRippleModule, MatInputModule, MatPaginator, FormsModule, OrderCardComponent, MatButtonModule, CurrencyPipe, CommonModule],
+  imports: [NgChartsModule, MatRippleModule, MatInputModule, MatPaginator, FormsModule, OrderDumbCardComponent, MatButtonModule, CurrencyPipe, CommonModule],
   templateUrl: './my-orders-component.html',
   styleUrl: './my-orders-component.css'
 })
@@ -50,8 +50,8 @@ export class MyOrdersComponent implements OnInit {
   lineChartOptions: ChartConfiguration<'line'>['options'] = {
     responsive: true,
     animation: {
-      duration: 1000,          // animation duration in ms
-      easing: 'easeOutQuart'    // smooth easing function
+      duration: 1000,
+      easing: 'easeOutQuart'
     },
     hover: {
       mode: 'nearest',

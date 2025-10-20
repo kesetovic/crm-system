@@ -2,6 +2,6 @@
     align-items: stretch;
 }
 
-app-all-orders-card-component {
+app-order-dumbcard-component {
     width: min(400px, 100%);
 }

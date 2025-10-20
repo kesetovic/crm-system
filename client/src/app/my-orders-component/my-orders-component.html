@@ -42,7 +42,7 @@
 </div>
 <div class="d-flex gap-3 m-3 flex-wrap">
     @for (item of paginatedResult()?.items; track $index) {
-    <app-order-card-component [order]="item"></app-order-card-component>
+    <app-order-dumbcard-component [order]="item"></app-order-dumbcard-component>
     }
 </div>
 

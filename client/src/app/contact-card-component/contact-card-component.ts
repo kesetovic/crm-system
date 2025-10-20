@@ -13,9 +13,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './contact-card-component.css'
 })
 export class ContactCardComponent {
-  private contactService = inject(ContactsService);
-  private toastrService = inject(ToastrService);
-
   @Input() contact?: CalleeDto;
   @Output() contactDeleted = new EventEmitter<string>();
   faUser = faUser;
@@ -23,15 +20,5 @@ export class ContactCardComponent {
   faHome = faHome;
   faTrashCan = faTrashCan;
 
-  removeContact(id: string) {
-    this.contactService.deleteContact(id).subscribe({
-      next: () => {
-        this.toastrService.info('Contact removed successfully');
-        this.contactDeleted.emit(this.contact?.calleeId);
-      },
-      error: (error) => {
-        this.toastrService.error('Failed to remove contact: ' + error.message);
-      }
-    });
-  }
+
 }
