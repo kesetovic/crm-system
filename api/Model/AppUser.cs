@@ -8,6 +8,7 @@ public class AppUser : IdentityUser
     public required string LastName { get; set; }
     public required DateTime DateOfBirth { get; set; }
     public required Gender Gender { get; set; }
+    public string? TwillioNumber { get; set; }
     public ICollection<Order> Orders { get; set; } = new List<Order>();
     public ICollection<Callee> Callees { get; set; } = new List<Callee>();
 }
