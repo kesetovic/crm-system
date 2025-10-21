@@ -3,5 +3,6 @@ export interface AuthResponse {
     expiration: Date,
     username: string,
     roles: string[],
-    userId: string
+    userId: string,
+    twilioNumber: string
 }

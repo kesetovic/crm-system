@@ -4,8 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUser, faPhone, faHome, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { CalleeDto } from '../_models/calleDto';
-import { ContactsService } from '../_services/contacts-service';
-import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-contact-card-component',
   imports: [MatCardModule, MatButtonModule, FontAwesomeModule],
@@ -15,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ContactCardComponent {
   @Input() contact?: CalleeDto;
   @Output() contactDeleted = new EventEmitter<string>();
+  @Output() call = new EventEmitter<string>();
   faUser = faUser;
   faPhone = faPhone;
   faHome = faHome;
@@ -22,5 +21,9 @@ export class ContactCardComponent {
 
   removeContact() {
     this.contactDeleted.emit(this.contact?.calleeId);
+  }
+  callContact() {
+    console.log('Callee' + this.contact?.calleeId);
+    this.call.emit(this.contact?.calleeId);
   }
 }

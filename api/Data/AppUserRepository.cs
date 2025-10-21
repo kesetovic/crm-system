@@ -11,4 +11,8 @@ public class AppUserRepository(DataContext context) : IAppUserRepository
     {
         return await context.Users.FirstOrDefaultAsync(x => x.UserName == username);
     }
+    public async Task<AppUser?> GetUserByIdAsync(string id)
+    {
+        return await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+    }
 }
