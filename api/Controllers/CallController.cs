@@ -1,5 +1,3 @@
-using api.Data;
-using api.DTOs;
 using api.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,31 +7,39 @@ namespace api.Controllers;
 
 public class CallController(IUnitOfWork unitOfWork, ITwilioService twilioService) : BaseController
 {
-    [HttpPost("call-contact")]
+
     [Authorize]
-    public async Task<ActionResult> CallContact([FromBody] CallContactDto dto)
+    [HttpGet("token")]
+    public ActionResult GetToken([FromQuery] string identity)
     {
-        var user = await unitOfWork.Users.GetUserByIdAsync(dto.AppUserId);
-        var contact = await unitOfWork.Callees.GetCalleeByIdAsync(dto.ContactId);
-
-        if (user == null || contact == null)
-            return NotFound("User or contact not found.");
-
-        if (string.IsNullOrWhiteSpace(user.TwillioNumber))
-            return BadRequest("User has no Twilio number assigned.");
-
-        var bridgeUrl = $"https://two-hoops-doubt.loca.lt/api/twilio/bridge?to={Uri.EscapeDataString(contact.PhoneNumber!)}";
-
-        var call = twilioService.ConnectUserToContact(user.TwillioNumber, contact.PhoneNumber, bridgeUrl);
-
-        return Ok(new { sid = call.Sid, status = call.Status.ToString() });
+        var token = twilioService.GenerateTwilioToken(identity);
+        return Ok(new { token });
     }
-
-    [HttpPost("bridge")]
-    public ContentResult Bridge([FromQuery] string to)
+    [HttpPost("voice")]
+    public async Task<IActionResult> HandleVoice([FromForm] string To, [FromForm] string From)
     {
         var response = new Twilio.TwiML.VoiceResponse();
-        response.Dial(to);
+
+        var agentIdentity = From?.Replace("client:", "");
+        var user = await unitOfWork.Users.GetUserByIdAsync(agentIdentity!);
+
+        if (user == null || string.IsNullOrWhiteSpace(user.TwillioNumber))
+        {
+            response.Say("Invalid user or missing Twillio number");
+            return Content(response.ToString(), "text/xml");
+        }
+
+        if (!string.IsNullOrEmpty(To))
+        {
+            var dial = new Twilio.TwiML.Voice.Dial(callerId: user.TwillioNumber);
+            dial.Number(To);
+            response.Append(dial);
+        }
+        else
+        {
+            response.Say("No destination number provided.");
+        }
+        
         return Content(response.ToString(), "text/xml");
     }
 }

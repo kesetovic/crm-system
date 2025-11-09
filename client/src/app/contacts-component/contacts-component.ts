@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatInputModule } from "@angular/material/input";
 import { TwilioService } from '../_services/twilio-service';
 import { Auth } from '../_services/auth';
+import { CallWindowComponent } from '../call-window-component/call-window-component';
 
 @Component({
   selector: 'app-contacts-component',
@@ -20,6 +21,7 @@ export class ContactsComponent implements OnInit {
   private contactsService = inject(ContactsService);
   private toastrService = inject(ToastrService);
   private dialog: MatDialog = inject(MatDialog);
+  private callDialog: MatDialog = inject(MatDialog);
   private twilioService = inject(TwilioService);
   private authService = inject(Auth);
 
@@ -38,6 +40,7 @@ export class ContactsComponent implements OnInit {
         this.toastrService.error('Failed to load contacts: ' + error.message);
       }
     })
+    this.twilioService.init(this.authService.currentUser()?.userId!);
   }
 
   openAddContactDialog(): void {
@@ -93,11 +96,11 @@ export class ContactsComponent implements OnInit {
     });
   }
 
-  callContact(to: string) {
-    console.log('Main callContact called!' + this.authService.currentUser()?.userId);
-    this.twilioService.callContact(this.authService.currentUser()?.userId!, to).subscribe({
-      next: (res: any) => alert('Calling... SID: ' + res.sid),
-      error: err => alert('Error: ' + (err.error || err.message))
-    })
+  makeCall(to: string) {
+    this.callDialog.open(CallWindowComponent, {
+      data: { contactNumber: to },
+      width: '300px'
+    });
   }
+
 }

@@ -37,6 +37,7 @@
     "@tsparticles/angular": "^3.0.0",
     "@tsparticles/engine": "^3.9.1",
     "@tsparticles/slim": "^3.9.1",
+    "@twilio/voice-sdk": "^2.16.0",
     "bootstrap": "^5.3.8",
     "chart.js": "^4.4.1",
     "ng2-charts": "^5.0.4",

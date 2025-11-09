@@ -1,0 +1,11 @@
+<div class="call-window">
+    <h5>Calling: {{ contactNumber }}</h5>
+    <h6>Status: {{ status }}</h6>
+    <p>Duration: {{ callTime | date:'mm:ss' }}</p>
+
+    <button matButton="filled" class="me-3" (click)="toggleMute()">
+        {{ isMuted ? 'Unmute' : 'Mute' }}
+    </button>
+
+    <button matButton="elevated" (click)="hangup()">Hang up</button>
+</div>

@@ -23,7 +23,6 @@ export class ContactCardComponent {
     this.contactDeleted.emit(this.contact?.calleeId);
   }
   callContact() {
-    console.log('Callee' + this.contact?.calleeId);
-    this.call.emit(this.contact?.calleeId);
+    this.call.emit(this.contact?.phoneNumber);
   }
 }
