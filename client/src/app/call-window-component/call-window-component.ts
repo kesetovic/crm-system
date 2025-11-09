@@ -13,7 +13,6 @@ import { timeout } from 'rxjs';
   styleUrl: './call-window-component.css'
 })
 export class CallWindowComponent implements OnInit, OnDestroy {
-  private toastr = inject(ToastrService);
 
   @Input() contactNumber = '';
 
@@ -82,5 +81,6 @@ export class CallWindowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.stopTimer();
+    this.twilioService.hangup();
   }
 }
