@@ -1,4 +1,4 @@
 export const environment = {
     production: 'true',
-    apiUrl: 'api/',
+    apiUrl: 'http:///crm-api:5000/api/',
 };

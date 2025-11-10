@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  crm-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: crm-db
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - crm-data:/var/opt/mssql
+
+  crm-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: crm-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=crm-db;Database=CRM;User=sa;Password=YourStrong!Passw0rd;Encrypt=True;TrustServerCertificate=True;
+    ports:
+      - "5000:5000"
+    depends_on:
+      - crm-db
+
+  crm-ui:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: crm-ui
+    ports:
+      - "4200:80"
+    depends_on:
+      - crm-api
+
+volumes:
+  crm-data:
