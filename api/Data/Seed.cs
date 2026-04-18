@@ -8,9 +8,10 @@ namespace api.Data;
 
 public class Seed
 {
-    public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+    public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
     {
         if (userManager.Users.Any()) return;
+        var seedPassword = configuration["SeedPassword"] ?? "password1";
 
         var roles = new[] { "Operater", "Packer", "Admin" };
 
@@ -38,7 +39,7 @@ public class Seed
         foreach (var user in users)
         {
             user.EmailConfirmed = true;
-            var result = await userManager.CreateAsync(user, "password1");
+            var result = await userManager.CreateAsync(user, seedPassword);
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, "Operater");
@@ -58,7 +59,7 @@ public class Seed
 
         if (await userManager.FindByNameAsync(admin.UserName) == null)
         {
-            var result = await userManager.CreateAsync(admin, "password1");
+            var result = await userManager.CreateAsync(admin, seedPassword);
             if (result.Succeeded)
             {
                 await userManager.AddToRolesAsync(admin, roles);

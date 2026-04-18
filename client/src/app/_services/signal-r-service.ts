@@ -16,7 +16,7 @@ export class SignalRService {
   startConnection() {
     if (this.connected) return;
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5054/ordersHub', {
+      .withUrl('api/ordersHub', {
         withCredentials: true
       })
       .withAutomaticReconnect()

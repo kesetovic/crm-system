@@ -18,16 +18,25 @@ public class TwilioService : ITwilioService
     public TwilioService(IConfiguration config)
     {
         this.config = config;
-        _sid = config["Twilio:AccountSid"]!;
-        _token = config["Twilio:AuthToken"]!;
-        _apiKey = config["Twilio:ApiKey"]!;
-        _apiSecret = config["Twilio:ApiSecret"]!;
-        _appSid = config["Twilio:TwimlAppSid"]!;
-        TwilioClient.Init(_sid, _token);
+        _sid = config["Twilio:AccountSid"] ?? "";
+        _token = config["Twilio:AuthToken"] ?? "";
+        _apiKey = config["Twilio:ApiKey"] ?? "";
+        _apiSecret = config["Twilio:ApiSecret"] ?? "";
+        _appSid = config["Twilio:TwimlAppSid"] ?? "";
+
+        if (!string.IsNullOrEmpty(_sid) && !string.IsNullOrEmpty(_token))
+        {
+            TwilioClient.Init(_sid, _token);
+        }
     }
 
-    public CallResource ConnectUserToContact(string fromNumber, string toNumber, string bridgeUrl)
+    public CallResource? ConnectUserToContact(string fromNumber, string toNumber, string bridgeUrl)
     {
+        if (string.IsNullOrEmpty(_sid) || string.IsNullOrEmpty(_token))
+        {
+            return null;
+        }
+
         var call = CallResource.Create(
             from: new PhoneNumber(fromNumber),
             to: new PhoneNumber(toNumber),
@@ -35,8 +44,13 @@ public class TwilioService : ITwilioService
         );
         return call;
     }
-    public string GenerateTwilioToken(string identity)
+    public string? GenerateTwilioToken(string identity)
     {
+        if (string.IsNullOrEmpty(_sid) || string.IsNullOrEmpty(_apiKey) || string.IsNullOrEmpty(_apiSecret) || string.IsNullOrEmpty(_appSid))
+        {
+            return null;
+        }
+
         var grant = new VoiceGrant
         {
             OutgoingApplicationSid = _appSid,

@@ -5,6 +5,6 @@ namespace api.Interfaces;
 
 public interface ITwilioService
 {
-    public CallResource ConnectUserToContact(string fromNumber, string toNumber, string bridgeUrl);
-    public string GenerateTwilioToken(string identity);
+    public CallResource? ConnectUserToContact(string fromNumber, string toNumber, string bridgeUrl);
+    public string? GenerateTwilioToken(string identity);
 }

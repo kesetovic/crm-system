@@ -1,6 +1,7 @@
 using api.DTOs;
 using api.Interfaces;
 using api.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace api.Controllers;
 public class AuthController(UserManager<AppUser> userManager, ITokenService tokenService) : BaseController
 {
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<ActionResult<AuthResponseDto>> Login(LoginDto loginDto)
     {
         AppUser? user = await userManager.FindByNameAsync(loginDto.Username.ToLower());

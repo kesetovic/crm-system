@@ -13,6 +13,10 @@ public class CallController(IUnitOfWork unitOfWork, ITwilioService twilioService
     public ActionResult GetToken([FromQuery] string identity)
     {
         var token = twilioService.GenerateTwilioToken(identity);
+        if (token == null)
+        {
+            return BadRequest("Twilio service is not configured.");
+        }
         return Ok(new { token });
     }
     [HttpPost("voice")]

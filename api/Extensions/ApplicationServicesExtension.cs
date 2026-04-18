@@ -22,7 +22,7 @@ public static class ApplicationServicesExtension
         services
         .AddDbContext<DataContext>(options =>
             options
-            .UseSqlServer(config.GetConnectionString("DefaultConnection"))
+            .UseSqlServer(config.GetConnectionString("DefaultConnection"), sqlOptions => sqlOptions.EnableRetryOnFailure())
         );
 
         services
